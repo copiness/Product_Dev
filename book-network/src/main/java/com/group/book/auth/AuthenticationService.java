@@ -1,11 +1,15 @@
 package com.group.book.auth;
 
+import com.group.book.email.EmailService;
+import com.group.book.email.EmailTemplateName;
 import com.group.book.role.RoleRepository;
 import com.group.book.user.Token;
 import com.group.book.user.TokenRepository;
 import com.group.book.user.User;
 import com.group.book.user.UserRepository;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +25,19 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
+    private final EmailService emailService;
+
+
+
+    @Value("${application.security.mailing.frontend.activation-url}")
+    private String activationUrl;
 
     // SecureRandom instance
     private final SecureRandom secureRandom = new SecureRandom();
 
-    public void register(RegistrationRequest request) {
+
+
+    public void register(RegistrationRequest request) throws MessagingException {
         var userRole = roleRepository.findByName("USER")
                 // TODO: Better exception handling
                 .orElseThrow(() -> new IllegalStateException("ROLE USER not initialized"));
@@ -42,9 +54,17 @@ public class AuthenticationService {
         sendValidationEmail(user);
     }
 
-    private void sendValidationEmail(User user) {
+    private void sendValidationEmail(User user) throws MessagingException {
         var newToken = generateAndSaveActivationToken(user);
-        // TODO: Implement email sending logic
+
+        emailService.sendEmail(
+                user.getEmail(),
+                user.fullName(),
+                EmailTemplateName.ACTIVATE_ACCOUNT,
+                activationUrl,
+                newToken,
+                "Account activation"
+        );
     }
 
     private String generateAndSaveActivationToken(User user) {
