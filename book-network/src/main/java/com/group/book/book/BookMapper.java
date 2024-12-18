@@ -1,5 +1,6 @@
 package com.group.book.book;
 
+import com.group.book.history.BookTransactionHistory;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,5 +32,7 @@ public class BookMapper {
                 //.cover()
                 .build();
     }
-    }
+
+
+}
 

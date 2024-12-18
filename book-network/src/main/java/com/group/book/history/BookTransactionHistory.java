@@ -24,7 +24,7 @@ public class BookTransactionHistory extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne
-    @JoinColumn(name = "boo_id")
+    @JoinColumn(name = "book_id")
     private Book book;
     //book relationship
 

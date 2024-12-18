@@ -47,7 +47,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "owner")
     private List<Book> books;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "user")
     private List<BookTransactionHistory> histories;
 
     @CreatedDate
