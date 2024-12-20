@@ -34,9 +34,10 @@ AND bookTransactionHistory.book.id = :bookId
 AND bookTransactionHistory.returnApproved = false
 
 """)
-    boolean isAlreadyBorrowedByUser(Integer bookId, Integer id);
+    boolean isAlreadyBorrowedByUser(Integer userId, Integer bookId);
 
-@Query("""
+
+    @Query("""
     SELECT transaction
     FROM BookTransactionHistory transaction
     WHERE transaction.user.id = :userId
@@ -54,5 +55,6 @@ Optional<BookTransactionHistory> findByBookIdAndUserId(Integer bookId, Integer u
     AND transaction.returned = true
     AND transaction.returnApproved = false
 """)
-    Optional<BookTransactionHistory> findByBookIdAndOwnerId(Integer bookId, Integer id);
+   Optional<BookTransactionHistory> findByBookIdAndOwnerId(Integer bookId, Integer userId);
+
 }
