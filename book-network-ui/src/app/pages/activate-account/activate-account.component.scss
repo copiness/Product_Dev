@@ -1,0 +1,54 @@
+.container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+
+}
+.activate-message, .activate-error {
+  text-align: center;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 10px auto;
+  width: 80%; /* Responsive width */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.activate-message {
+  background-color: #d4edda; /* Light green for success */
+  color: #155724; /* Dark green text */
+  border: 1px solid #c3e6cb; /* Border color */
+}
+
+.activate-error {
+  background-color: #f8d7da; /* Light red for error */
+  color: #721c24; /* Dark red text */
+  border: 1px solid #f5c6cb; /* Border color */
+}
+
+/* Adding icons using Font Awesome */
+.activate-message::before,
+.activate-error::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 10px;
+}
+
+.activate-message::before {
+  content: "\f00c"; /* Check icon for success */
+}
+
+.activate-error::before {
+  content: "\f00d"; /* Times icon for error */
+}
+
+/* Animation for appearing notifications */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.activate-message,
+.activate-error {
+  animation: fadeIn 0.5s ease-in-out;
+}
